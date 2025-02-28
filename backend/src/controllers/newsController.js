@@ -8,7 +8,9 @@ exports.addNews = async (req, res) => {
     await news.save();
 
     // Emit real-time news update
-    req.io.to(category).emit("new_news", news);
+    if (req.io) {
+      req.io.to(category).emit("newsUpdate", news);
+    }
 
     res.status(201).json(news);
   } catch (error) {

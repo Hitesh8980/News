@@ -11,19 +11,19 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5174", 
+    origin: "*", 
     methods: ["GET", "POST"]
   },
 });
 
-// Middleware
-app.use(express.json());
-app.use(cors());
-swaggerDocs(app);
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
+// Middleware
+app.use(express.json());
+app.use(cors());
+swaggerDocs(app);
 
 // Routes
 app.use("/api/news", newsRoutes);

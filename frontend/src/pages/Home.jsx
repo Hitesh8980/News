@@ -19,7 +19,10 @@ const Home = () => {
 
     loadNews();
 
+    socket.on("connect", () => console.log("Connected to WebSocket ✅"));
+    socket.on("disconnect", () => console.log("Disconnected ❌"));
     socket.on("newsUpdate", (newArticle) => {
+      console.log("New article received:", newArticle);
       if (selectedCategory === "All" || newArticle.category === selectedCategory) {
         dispatch(addNews(newArticle));
       }
